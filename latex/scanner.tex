@@ -1,0 +1,44 @@
+\documentclass[aspectratio=43]{beamer}
+\usepackage[english]{babel}
+\input{preamble}
+\title{Analizador Léxico}
+\subtitle{Proyecto 1}
+\author[José P. Fernández, Roberto Vidal]{
+    José Pablo Fernández Cubillo%
+    \\%
+    Roberto Vidal Patiño%
+}
+\institute[Tecnológico de Costa Rica]{
+    Tecnológico de Costa Rica%
+    \\%
+    Compiladores e Intérpretes%
+}
+\date{I Semestre, 2021}
+
+\begin{document}
+    
+    \frame{\titlepage}
+    
+    \begin{frame}{Scanning y Herramienta Flex}
+            El proceso de scanning consiste en tomar el código fuente, pasarlo por el preprocesador y luego el archivo generado por el preprocesador es el que se mete en el scanner. \\
+            \begin{figure}[h]
+                \centerline{\includegraphics[scale=.15]{preprocessor.png}}
+            \end{figure}
+    \end{frame}
+    
+    \begin{frame}{Scanning y Herramienta Flex}
+        El uso de la herramienta flex es relativamente sencillo. Primero se debe definir los diferentes tipos de tokens y se coloca en un archivo header, desde flex se puede importar este archivo. Después, se pueden definir algunas expresiones regulares si se necesitan para identificar algún tipo de token. Luego, se coloca la expresión regular o el propio string y el código del token que debe retornar. Generalmente se usa junto a Bison, el cual sería el parser, pero en este caso como solo es el scanner, se utilizó solo flex. \\
+        \begin{figure}[h]
+            \centerline{\includegraphics[scale=.20]{flex.jpg}}
+        \end{figure}
+    \end{frame}
+
+    \input{code.tex}
+
+    \section{}
+    \begin{frame}{}
+        \centering
+            \Huge\bfseries
+        \textcolor{orange}{The End}
+    \end{frame}
+\end{document}
