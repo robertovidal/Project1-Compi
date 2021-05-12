@@ -1,2 +1,2 @@
-latex/scanner.pdf:
-	./scanner && cd latex && pdflatex scanner.tex && mv ./scanner.pdf ../result.pdf && cd .. && evince result.pdf
+scanner:
+	flex scanner.l && gcc main.c preprocessor.c trie.c scanner.c lex.yy.c -lfl -Wall -o scanner -g

@@ -1,6 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+#include "global.h"
 #include "scanner.h"
 FILE *file;
 
@@ -235,14 +233,11 @@ void insert_string(char *token_str){
 }
 
 
-int main() {
-    char fileName[128];
-    printf("Enter file name: ");
-    scanf("%s", fileName);
-    change_input(fileName);
+void startScan(FILE *tmpF) {
+    change_input(tmpF);
     file = fopen("latex/code.tex", "w");
     if(file == NULL){
-        printf("No se puede abrir el archivo");
+        printf("Cannot open latex/code.tex");
         exit(0);
     }
     struct tokens elToken = Get_Token();

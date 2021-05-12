@@ -587,7 +587,7 @@ char *yytext;
 	int int_val;
 	float float_val;
 	token Get_Token(void);	
-	void change_input(char *file);
+	void change_input(FILE *file);
 	void finish(void);
 #line 593 "lex.yy.c"
 #line 594 "lex.yy.c"
@@ -2354,8 +2354,9 @@ void yyfree (void * ptr )
 #line 121 "scanner.l"
 
 
-void change_input(char *file){
-	yyin = fopen(file, "r");
+void change_input(FILE *file){
+	rewind(file);
+	yyin = file;
 }
 
 token Get_Token(){

@@ -5,7 +5,7 @@
 	int int_val;
 	float float_val;
 	token Get_Token(void);	
-	void change_input(char *file);
+	void change_input(FILE *file);
 	void finish(void);
 %}
 
@@ -120,8 +120,9 @@ multilinecomment	[/][*][^*]*[*]+([^*/][^*]*[*]+)*[/]
 
 %%
 
-void change_input(char *file){
-	yyin = fopen(file, "r");
+void change_input(FILE *file){
+	rewind(file);
+	yyin = file;
 }
 
 token Get_Token(){

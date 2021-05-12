@@ -21,6 +21,6 @@ typedef struct tokens{
 
 struct tokens Get_Token(void);
 
-void change_input(char *file);
+void change_input(FILE *file);
 void finish(void);
-
+void startScan(FILE *tmpF);

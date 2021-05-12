@@ -1,8 +1,11 @@
+#include "print.c"
+#define SIZE 10
+
 float poly(float a[], int, float);
 
 int main()
 {
-	float x, a[10], y1;
+	float x, a[SIZE], y1;
 	int deg, i;
 
 	printf("Enter the degree of polynomial equation: ");
