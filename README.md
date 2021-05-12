@@ -19,4 +19,5 @@ with:
 
 sudo apt-get install flex
 
-We are using the files program.c and 
+We are using the files program.c and print.c as test
+files
