@@ -1,9 +1,0 @@
-[0] Config.pm:302> INFO - This is Biber 2.9
-[0] Config.pm:305> INFO - Logfile is 'scanner.blg'
-[27] biber:313> INFO - === dom may  9, 2021, 20:27:45
-[47] Biber.pm:371> INFO - Reading 'scanner.bcf'
-[103] Biber.pm:857> INFO - Found 0 citekeys in bib section 0
-[109] Utils.pm:169> WARN - The file 'scanner.bcf' does not contain any citations!
-[118] bbl.pm:617> INFO - Writing 'scanner.bbl' with encoding 'UTF-8'
-[118] bbl.pm:720> INFO - Output to scanner.bbl
-[118] Biber.pm:110> INFO - WARNINGS: 1

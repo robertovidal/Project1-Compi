@@ -1,6 +1,13 @@
 #include "global.h"
 #include "scanner.h"
 FILE *file;
+int constants = 0; 
+int keywords = 0;
+int operators = 0;
+int specialchars = 0;
+int identifiers = 0;
+int strings = 0;
+int errors = 0;
 
 char *token_type_text_color(token_code code){
     switch (code){
@@ -94,6 +101,7 @@ token_type get_token_type(token_code code){
     case INTVALUE:
     case FLOATVALUE:
     case CHARVALUE:
+        constants++;
         return CONSTANT;
         break;
     case AUTO:
@@ -127,6 +135,7 @@ token_type get_token_type(token_code code){
     case VOID:
     case VOLATILE:
     case WHILE:
+        keywords++;
         return KEYWORD;
         break;
     case INCREMENTOP:
@@ -163,6 +172,7 @@ token_type get_token_type(token_code code){
     case EQUALSIGN:
     case QUESTIONMARK:
     case SLASH:
+        operators++;
         return OPERATOR;
         break;
     case NUMBERSIGN:
@@ -181,19 +191,24 @@ token_type get_token_type(token_code code){
     case SIMPLEQUOTATIONMARK:
     case COMMA:
     case PERIOD:
+        specialchars++;
         return SPECIALCHAR;
         break;
     case IDENTIFIER:
+        identifiers++;
         return IDENT;
         break;
     
     case STRINGVALUE:
+        strings++;
         return STRING;
         break;
     case OTHER:
+        errors++;
         return ERROR;
         break;
     default:
+        errors++;
         return ERROR;
         break;
     }
@@ -278,7 +293,29 @@ void startScan(FILE *tmpF) {
         }
 		elToken = Get_Token();
 	}
-    fputs("\n\t\\end{frame}", file);
+    fputs("\n\t\\end{frame}\n\t\\begin{frame}{Histograma Tipos de Token}\n\t\t\\begin{tikzpicture}\n\t\t\t\\begin{axis}[\n\t\t\t\tylabel=Cantidad,\n\t\t\t\txlabel=Tokens,\n\t\t\t\tlegend style={at={(1.7,1)}},\n\t\t\t\tbar width=20pt,\n\t\t\t\tybar,\n\t\t\t\txtick=\\empty,\n\t\t\t]\n\t\t\t\\addplot[green!20!black,fill=green!80!white]\n\t\t\t\tcoordinates {(1,", file);
+    char number_str[100];
+    sprintf(number_str, "%d", keywords);
+    fputs(number_str, file);
+    fputs(")};\n\t\t\t\\addplot[purple!20!black,fill=purple!80!white]\n\t\t\t\tcoordinates {(1,", file);
+    sprintf(number_str, "%d", operators);
+    fputs(number_str, file);
+    fputs(")};\n\t\t\t\\addplot[gray!20!black,fill=gray!80!white]\n\t\t\t\tcoordinates {(1,", file);
+    sprintf(number_str, "%d", strings);
+    fputs(number_str, file);
+    fputs(")};\n\t\t\t\\addplot[orange!20!black,fill=orange!80!white]\n\t\t\t\tcoordinates {(1,", file);
+    sprintf(number_str, "%d", constants);
+    fputs(number_str, file);
+    fputs(")};\n\t\t\t\\addplot[yellow!20!black,fill=yellow!80!white]\n\t\t\t\tcoordinates {(1,", file);
+    sprintf(number_str, "%d", specialchars);
+    fputs(number_str, file);
+    fputs(")};\n\t\t\t\\addplot[blue!20!black,fill=blue!80!white]\n\t\t\t\tcoordinates {(1,", file);
+    sprintf(number_str, "%d", identifiers);
+    fputs(number_str, file);
+    fputs(")};\n\t\t\t\\addplot[red!20!black,fill=red!80!white]\n\t\t\t\tcoordinates {(1,", file);
+    sprintf(number_str, "%d", errors);
+    fputs(number_str, file);
+    fputs(")};\n\t\t\t\\legend{\\textcolor{black}{Palabras Reservadas},\\textcolor{black}{Operadores},\\textcolor{black}{String},\\textcolor{black}{Constantes},\\textcolor{black}{Caracteres Especiales},\\textcolor{black}{Identificadores},\\textcolor{black}{Errores Léxicos}}\n\t\t\t\\end{axis}\n\t\t\\end{tikzpicture}\n\t\\end{frame}", file);
     fclose(file);
     finish();
 }

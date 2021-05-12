@@ -74,3 +74,31 @@
 		 \hspace*{1em} \textcolor[HTML]{162511}{\colorbox[HTML]{5BF62A}{\fontfamily{lmdh}\selectfont return}} \textcolor[HTML]{84A8FA}{\colorbox[HTML]{15006A}{\fontfamily{ptm}\selectfont p}} \textcolor[HTML]{FFF8A0}{\colorbox[HTML]{413C00}{\fontfamily{qag}\selectfont ;}} \newline 
 		 \textcolor[HTML]{FFF8A0}{\colorbox[HTML]{413C00}{\fontfamily{qag}\selectfont  \} }}
 	\end{frame}
+	\begin{frame}{Histograma Tipos de Token}
+		\begin{tikzpicture}
+			\begin{axis}[
+				ylabel=Cantidad,
+				xlabel=Tokens,
+				legend style={at={(1.7,1)}},
+				bar width=20pt,
+				ybar,
+				xtick=\empty,
+			]
+			\addplot[green!20!black,fill=green!80!white]
+				coordinates {(1,21)};
+			\addplot[purple!20!black,fill=purple!80!white]
+				coordinates {(1,15)};
+			\addplot[gray!20!black,fill=gray!80!white]
+				coordinates {(1,7)};
+			\addplot[orange!20!black,fill=orange!80!white]
+				coordinates {(1,5)};
+			\addplot[yellow!20!black,fill=yellow!80!white]
+				coordinates {(1,102)};
+			\addplot[blue!20!black,fill=blue!80!white]
+				coordinates {(1,54)};
+			\addplot[red!20!black,fill=red!80!white]
+				coordinates {(1,0)};
+			\legend{\textcolor{black}{Palabras Reservadas},\textcolor{black}{Operadores},\textcolor{black}{String},\textcolor{black}{Constantes},\textcolor{black}{Caracteres Especiales},\textcolor{black}{Identificadores},\textcolor{black}{Errores Léxicos}}
+			\end{axis}
+		\end{tikzpicture}
+	\end{frame}
