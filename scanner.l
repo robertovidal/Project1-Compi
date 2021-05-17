@@ -19,7 +19,7 @@ simplequotationmark \'
 backslash	\\
 comment	\/\/.*
 multilinecomment	[/][*][^*]*[*]+([^*/][^*]*[*]+)*[/]
-preprocess	\#define.*|\#include.*
+preprocess	(\#define|\#include|\#undef|\#ifdef|\#ifndef|\#if|\#else|\#elif|\#error|\#pragma).*
 
 %%
 
