@@ -3,8 +3,8 @@
 \input{preamble}
 \title{Analizador Léxico}
 \subtitle{Proyecto 1}
-\author[José P. Fernández, Roberto Vidal]{
-    José Pablo Fernández Cubillo%
+\author[Jose P. Fernández, Roberto Vidal]{
+    Jose Pablo Fernández Cubillo%
     \\%
     Roberto Vidal Patiño%
 }
@@ -18,6 +18,56 @@
 \begin{document}
     
     \frame{\titlepage}
+
+    \begin{frame}{Preprocesador}
+            El preprocesador es basado en el que se usa para el lenguaje c. Cuenta con 4 fases. \\
+            \begin{enumerate}
+                \item Remplazo de digrafos y trigrafos.
+                \begin{enumerate}
+                    \item Digrafos: \textless : :\textgreater, \textless \%, \% \textgreater \% :
+                    \item Trigrafos empiezan con ??.
+                \end{enumerate}
+                \item Empalmado de líneas (si una línea termina con \ se omite el salto de línea concatenandola como si fuera la misma).
+                \item Remplazo de comentarios y divide tokens por un caracter de separación.
+                \item Expansión de macros.
+            \end{enumerate}
+    \end{frame}
+
+    \begin{frame}{Tabla de dígrafos}
+        \begin{table}
+            \begin{tabular}{c | c}
+            Dígrafo & Equivalencia \\
+            \hline \hline
+                \textless : & [ \\
+                :\textgreater & ] \\
+                \textless \% & \{ \\
+                \% \textgreater & \} \\
+                \% : & \# 
+            \end{tabular}
+            \caption{Tabla de dígrafos}
+        \end{table}
+
+    \end{frame}
+
+    \begin{frame}{Tabla de trígrafos}
+        \begin{table}
+            \begin{tabular}{c | c}
+            trígrafo & Equivalencia \\
+            \hline \hline
+                ??= & \# \\
+                ??/ & \textbackslash \\
+                ??' & \^{} \\
+                ??( & [ \\
+                ??) & ] \\
+                ??! & \textbar \\
+                ??\textless & \{ \\
+                ??\textgreater & \} \\
+                ??\textendash & \~{}
+            \end{tabular}
+            \caption{Tabla de trígrafos}
+        \end{table}
+
+    \end{frame}
     
     \begin{frame}{Scanning y Herramienta Flex}
             El proceso de scanning consiste en tomar el código fuente, pasarlo por el preprocesador y luego el archivo generado por el preprocesador es el que se mete en el scanner. \\

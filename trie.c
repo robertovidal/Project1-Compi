@@ -1,13 +1,17 @@
 #include "trie.h"
 
 /* Code taken from https://www.techiedelight.com/trie-implementation-insertTrie-searchTrie-delete/
- * with little modifications
+ * with modifications to fit the problem
  */
  
 // Function that returns a new Trie node
 struct Trie* getNewTrieNode(){
     struct Trie* node = (struct Trie*)malloc(sizeof(struct Trie));
+    Array_char value = {NULL, 0, 0};
+    Array_chars vars = {NULL, 0, 0};
     node->isLeaf = false;
+    node->value = value;
+    node->vars = vars;
  
     for (int i = 0; i < CHAR_SIZE; i++) {
         node->character[i] = NULL;
@@ -17,7 +21,7 @@ struct Trie* getNewTrieNode(){
 }
  
 // Iterative function to insertTrie a string into a Trie
-void insertTrie(struct Trie *head, Array_char str, Array_char value){
+void insertTrie(struct Trie *head, Array_char str, Array_char value, Array_chars vars){
     // start from the root node
     struct Trie* curr = head;
     for (int i = 0; i < str.used && str.data[i] != '\0'; i++){
@@ -35,28 +39,30 @@ void insertTrie(struct Trie *head, Array_char str, Array_char value){
     if(curr->value.size){
         freeArray(curr->value);
     }
+    if(curr->vars.size){
+        freeArrayP(curr->vars);
+    }
     curr->value = value;
+    curr->vars = vars;
 }
  
 
-Array_char searchTrie(struct Trie* head, Array_char str){
-    Array_char fail = {NULL, 0, 0};
+struct Trie* searchTrie(struct Trie* head, Array_char str){
     if (head == NULL) {
-        return fail;
+        return NULL;
     }
  
     struct Trie* curr = head;
     for (int i = 0; i < str.used && str.data[i] != '\0'; i++){
         // go to the next node
-        //if(curr->isLeaf)
         curr = curr->character[str.data[i] - '0'];
         // if the string is invalid (reached end of a path in the Trie)
         if (curr == NULL) {
-            return fail;
+            return NULL;
         }
     }
 
-    return curr->value;
+    return curr;
 }
 
 bool isLeafTrie(struct Trie* head){
@@ -104,12 +110,16 @@ bool deletionTrie(struct Trie **curr, char* str){
         // if the current node is a leaf node and doesn't have any children
         if (!hasChildrenTrie(*curr)){
             freeArray((*curr)->value);
+            if((*curr)->vars.size)
+                freeArrayP((*curr)->vars);
             free(*curr);    // delete the current node
             (*curr) = NULL;
             return true;       // delete the non-leaf parent nodes
         } else {// if the current node is a leaf node and has children
             // mark the current node as a non-leaf node (DON'T DELETE IT)
             freeArray((*curr)->value);
+            if((*curr)->vars.size)
+                freeArrayP((*curr)->vars);
             (*curr)->isLeaf = 0;
             return false;       // don't delete its parent nodes
         }

@@ -8,19 +8,21 @@
 
 typedef Array(char) Array_char;
 typedef Array(int) Array_int;
+typedef Array(Array_char) Array_chars;
 
 // Data structure to store a Trie node
 struct Trie{
     bool isLeaf;
     struct Trie* character[CHAR_SIZE]; 
     Array_char value;
+    Array_chars vars;
 };
  
 struct Trie* getNewTrieNode();
  
-void insertTrie(struct Trie *head, Array_char str, Array_char value);
+void insertTrie(struct Trie *head, Array_char str, Array_char value, Array_chars vars);
  
-Array_char searchTrie(struct Trie* head, Array_char str);
+struct Trie* searchTrie(struct Trie* head, Array_char str);
 
 bool isLeafTrie(struct Trie* head);
  

@@ -1,3 +1,7 @@
+#include "global.h"
+#include "trie.h"
+#include "array.h"
+
 void clearBuffer(void);
 
 void bufferChar(char c);
@@ -12,7 +16,7 @@ char digraphReplacementPerc(char c);
 
 void tokenization();
 
-void macroExpansion(char c);
+Array_char macroExpansion(Array_char macro);
 
 void preprocess();
 
@@ -29,6 +33,12 @@ void closeLastFile();
 bool openUserFile(char *fileName);
 
 void freeNames();
+
+void insertBufferInFile();
+
+char getChar();
+
+void ungetChar();
 
 typedef enum {
     DEFINE, INCLUDE, NODIRECTIVE

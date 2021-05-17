@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2021.5.7)  11 MAY 2021 22:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2021.5.11)  16 MAY 2021 20:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1489,27 +1489,61 @@ Non-PDF special ignored!
 Non-PDF special ignored!
 Non-PDF special ignored!
 Non-PDF special ignored!{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-<preprocessor.png, id=56, 1606.0pt x 803.0pt>
-File: preprocessor.png Graphic file (type png)
-<use preprocessor.png>
-Package pdftex.def Info: preprocessor.png  used on input line 27.
-(pdftex.def)             Requested size: 240.8896pt x 120.4448pt.
+LaTeX Font Info:    Try loading font information for OML+cmss on input line 34.
+
+LaTeX Font Info:    No file OMLcmss.fd. on input line 34.
+
+
+LaTeX Font Warning: Font shape `OML/cmss/m/n' undefined
+(Font)              using `OML/cmm/m/it' instead
+(Font)              for symbol `textless' on input line 34.
 
 [2
 
- <./preprocessor.png>]
-<flex.jpg, id=83, 382.42876pt x 500.87125pt>
-File: flex.jpg Graphic file (type jpg)
-<use flex.jpg>
-Package pdftex.def Info: flex.jpg  used on input line 34.
-(pdftex.def)             Requested size: 76.48439pt x 100.17247pt.
+]
+LaTeX Font Info:    Try loading font information for U+msa on input line 50.
+ (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 50.
 
-Overfull \vbox (16.56854pt too high) detected at line 34
- []
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+LaTeX Font Info:    Try loading font information for OMS+cmss on input line 50.
+
+LaTeX Font Info:    No file OMScmss.fd. on input line 50.
+
+
+LaTeX Font Warning: Font shape `OMS/cmss/m/n' undefined
+(Font)              using `OMS/cmsy/m/n' instead
+(Font)              for symbol `textbraceleft' on input line 50.
 
 [3
 
- <./flex.jpg>] (./code.tex [4
+] [4
+
+]
+<preprocessor.png, id=137, 1606.0pt x 803.0pt>
+File: preprocessor.png Graphic file (type png)
+<use preprocessor.png>
+Package pdftex.def Info: preprocessor.png  used on input line 77.
+(pdftex.def)             Requested size: 240.8896pt x 120.4448pt.
+ [5
+
+ <./preprocessor.png>]
+<flex.jpg, id=164, 382.42876pt x 500.87125pt>
+File: flex.jpg Graphic file (type jpg)
+<use flex.jpg>
+Package pdftex.def Info: flex.jpg  used on input line 84.
+(pdftex.def)             Requested size: 76.48439pt x 100.17247pt.
+
+Overfull \vbox (16.56854pt too high) detected at line 84
+ []
+
+[6
+
+ <./flex.jpg>] (./code.tex [7
 
 ]
 LaTeX Font Info:    Try loading font information for OT1+lmdh on input line 29.
@@ -1536,7 +1570,7 @@ LaTeX Font Info:    Try loading font information for OT1+ppl on input line 29.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ppl.fd
 File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
-) [5
+) [8
 
 ]
 LaTeX Font Info:    Try loading font information for OMS+qag on input line 76.
@@ -1547,23 +1581,15 @@ LaTeX Font Warning: Font shape `OMS/qag/m/n' undefined
 (Font)              using `OMS/cmsy/m/n' instead
 (Font)              for symbol `textbraceleft' on input line 76.
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 76.
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Try loading font information for U+msb on input line 76.
+[9
 
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [6
-
-] [7
+] [10
 
 
-] [8
+] [11
 
 
-] [9
+] [12
 
 
 ]
@@ -1577,9 +1603,9 @@ Overfull \hbox (7.1789pt too wide) in paragraph at lines 104--104
 [][]  
  []
 
-[10
+[13
 
-]) [11
+]) [14
 
 ]
 \tf@nav=\write8
@@ -1591,11 +1617,11 @@ Overfull \hbox (7.1789pt too wide) in paragraph at lines 104--104
 \tf@snm=\write10
 \openout10 = `scanner.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 44.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 44.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 94.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 94.
  (./scanner.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 44.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 44.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 94.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 94.
 Package rerunfilecheck Info: File `scanner.out' has not changed.
 (rerunfilecheck)             Checksum: 847C1B0AFCC67B9B61B18CBB7809E3AA;85.
 
@@ -1604,13 +1630,13 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 34932 strings out of 492982
- 822901 string characters out of 6134897
- 1064788 words of memory out of 5000000
- 37747 multiletter control sequences out of 15000+600000
- 19738 words of font info for 49 fonts, out of 8000000 for 9000
+ 35017 strings out of 492982
+ 824822 string characters out of 6134896
+ 1064654 words of memory out of 5000000
+ 37822 multiletter control sequences out of 15000+600000
+ 20043 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 74i,18n,122p,1294b,2227s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 74i,18n,122p,1204b,2227s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/
 fonts/enc/dvips/tex-gyre/q-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.en
 c}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
@@ -1625,10 +1651,10 @@ e1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf/fonts/type1/public/lm/lmdunh
 ve/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1
 /urw/times/utmr8a.pfb>
-Output written on scanner.pdf (11 pages, 361164 bytes).
+Output written on scanner.pdf (14 pages, 369550 bytes).
 PDF statistics:
- 391 PDF objects out of 1000 (max. 8388607)
- 348 compressed objects within 4 object streams
- 25 named destinations out of 1000 (max. 500000)
+ 472 PDF objects out of 1000 (max. 8388607)
+ 425 compressed objects within 5 object streams
+ 31 named destinations out of 1000 (max. 500000)
  57 words of extra memory for PDF output out of 10000 (max. 10000000)
 

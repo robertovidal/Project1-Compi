@@ -1,5 +1,14 @@
 #include "print.c"
 #define SIZE 10
+#define formula(a,b,c) a + b*c
+#define toString(x) #x
+#define print(a) printf(a)
+#define pr(a) print(a)
+#define cycle(x, y, z) for(x=0; x<=y; x++)\
+	{\
+		printf("Enter the coefficient of x to the power %d: ",x);\
+		scanf("%f",&z[x]);\
+	}
 
 float poly(float a[], int, float);
 
@@ -8,17 +17,13 @@ int main()
 	float x, a[SIZE], y1;
 	int deg, i;
 
-	printf("Enter the degree of polynomial equation: ");
+	pr(toString    (Enter the degree of polynomial equation: ));
 	scanf("%d", &deg);
 
-	printf("Ehter the value of x for which the equation is to be evaluated: ");
+	printf("Enter the value of x for which the equation is to be evaluated: ");
 	scanf("%f", &x);
 
-	for(i=0; i<=deg; i++)
-	{
-		printf("Enter the coefficient of x to the power %d: ",i);
-		scanf("%f",&a[i]);
-	}
+	cycle(i, deg, a);
 
 	y1 = poly(a, deg, x);
 	
@@ -37,7 +42,7 @@ float poly(float a[], int deg, float x)
 	
 	for(i=deg;i>=1;i--)
 	{
-		p = (a[i-1] + x*p);
+		p = formula (a[i-1],x,p);
 	}
 	
 	return p;
