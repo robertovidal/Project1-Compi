@@ -259,10 +259,8 @@ void startScan(FILE *tmpF) {
     char *token_color_text_str;
     char *token_color_box_str;
     char *token_font;
-    int lines = 0;
     char latex[] = "\\section{Programa Fuente} \n\n \t\\frame{\\sectionpage} \n\n\\begin{frame}{Formato de tokens} \n\t\t\\begin{enumerate} \n\t\t\t \\item {\\textcolor[HTML]{162511}{\\colorbox[HTML]{5BF62A}{\\fontfamily{lmdh} \\selectfont \n\t\t\t\tPalabras Reservadas% \n\t\t\t}}} \n\t\t\t\\item {\\textcolor[HTML]{290B26}{\\colorbox[HTML]{9F7BBD}{\\fontfamily{cmtt}\\selectfont \n\t\t\t\tOperadores%\n\t\t\t}}} \n\t\t\t\\item {\\textcolor[HTML]{B5B5B5}{\\colorbox[HTML]{161616}{\\fontfamily{cmss}\\selectfont \n\t\t\t\tString% \n\t\t\t}}} \n\t\t\t\\item {\\textcolor[HTML]{2A1200}{\\colorbox[HTML]{FFA562}{\\fontfamily{pcr}\\selectfont \n\t\t\t\tConstantes%\n\t\t\t}}} \n\t\t\t\\item {\\textcolor[HTML]{FFF8A0}{\\colorbox[HTML]{413C00}{\\fontfamily{qag}\\selectfont \n\t\t\t\tCaracteres Especiales% \n\t\t\t}}} \n\t\t\t\\item {\\textcolor[HTML]{84A8FA}{\\colorbox[HTML]{15006A}{\\fontfamily{ptm}\\selectfont \n\t\t\t\tIdentificadores% \n\t\t\t}}} \n\t\t\t\\item {\\textcolor[HTML]{FF0000}{\\colorbox[HTML]{300707}{\\fontfamily{ppl}\\selectfont \n\t\t\t\tErrores Léxicos% \n\t\t\t}}} \n\t\t\\end{enumerate} \n\t\\end{frame} \n\n\t\\begin{frame}[allowframebreaks, noframenumbering]{Programa Fuente}\n\t\t";
     fputs(latex, file);
-    char latexInsert[1000];
     token_type type;
 	while(elToken.code != END_OF_FILE){
         if(elToken.code == TAB)
