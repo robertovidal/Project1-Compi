@@ -10,6 +10,9 @@ Array_chars names;
 Array_char userFileName;
 bool skipsEnter = false;
 bool freeExp = false;
+bool isStringOrChar = false;
+bool ungetCalled = false;
+int triOrDiChanged = 1;
 
 
 struct Trie* head;
@@ -29,86 +32,75 @@ void bufferChar(char c){
 // Changes trigraphs which have two interrogation
 // symbols (??) at the beginning
 char trigraphReplacement(char c){
-    clearBuffer();
+    triOrDiChanged = 3;
     switch(c){
         case '=':
             return '#';
-            break;
         case '/':
             return '\\';
-            break;
         case '\'':
             return '^';
-            break;
         case '(':
             return '[';
-            break;
         case ')':
             return ']';
-            break;
         case '!':
             return '|';
-            break;
         case '<':
             return '{';
-            break;
         case '>':
             return '}';
-            break;
         case '-':
             return '~';
-            break;
         
     }
-    fputc('?', tmpF);
-    fputc('?', tmpF);
-    return c;
+    triOrDiChanged = 2;
+    ungetChar();
+    return buffer.data[buffer.used-1];
 }
 
 // Changes digraphs with the less than (<) symbol
 // at the begining
 char digraphReplacementLess(char c){
-    clearBuffer();
+    triOrDiChanged = 2;
     switch(c){
         case ':':
             return '[';
-            break;
         case '%':
             return '{';
-            break;
     }
-    fputc('<', tmpF);
-    return c;
+    triOrDiChanged = 1;
+    ungetChar();
+    return buffer.data[buffer.used-1];
 }
 
 // Changes digraphs with the colon (:) symbol
 // at the begining
 char digraphReplacementColon(char c){
-    clearBuffer();
+    triOrDiChanged = 2;
     switch(c){
         case '>':
             return ']';
-            break;
     }
-    fputc(':', tmpF);
-    return c;
+    triOrDiChanged = 1;
+    ungetChar();
+    return buffer.data[buffer.used-1];
 }
 
 // Changes digraphs with the percentage (%) symbol
 // at the begining
 char digraphReplacementPerc(char c){
-    clearBuffer();
+    triOrDiChanged = 2;
     switch(c){
         case '>':
             return '}';
-            break;
         case ':':
             return '#';
-            break;
     
     }
-    fputc('%', tmpF);
-    return c;
+    triOrDiChanged = 1;
+    ungetChar();
+    return buffer.data[buffer.used-1];
 }
 
 // After having found an alpha character it checks wether a
@@ -279,22 +271,6 @@ void preprocess(){
     initArray(macro, char, 10);
 
     while ((inChar = getChar()) != EOF){
-        // This first part changes di and trigraphs
-        if(inChar ==  '<'){
-            inChar = getChar();
-            inChar = digraphReplacementLess(inChar);
-        } else if(inChar ==  ':'){
-            inChar = getChar();
-            inChar = digraphReplacementColon(inChar);
-        } else if(inChar ==  '%'){
-            inChar = getChar();
-            inChar = digraphReplacementPerc(inChar);
-        } else if(inChar ==  '?'){
-            if(inChar == '?'){
-                inChar = getChar();
-                inChar = trigraphReplacement(inChar);
-            }
-        }
 
         // This part is for the other types of expressions
         // that can be found in the preprocessing
@@ -341,6 +317,7 @@ void preprocess(){
             } else {
                 fputc('/', tmpF);
             }
+            clearBuffer();
         } else if(inChar ==  '#'){
             clearBuffer();
             for(inChar = getChar(); isalpha(inChar); inChar = getChar()){}
@@ -601,7 +578,12 @@ void insertBufferInFile(){
 // them
 char getChar(){
     skipsEnter = false;
+    triOrDiChanged = 1;
     char c = getc(userFiles.data[userFiles.used-1]);
+    if((c == '"' || c == '\'') && !ungetCalled){
+        isStringOrChar = !isStringOrChar;
+    }
+    ungetCalled = false;
     if(c == '\\'){
         char c2 = getc(userFiles.data[userFiles.used-1]);
         if(c2 == '\n'){
@@ -613,14 +595,45 @@ char getChar(){
         }
     }
     bufferChar(c);
+    if(!isStringOrChar){
+        // This part changes di and trigraphs
+        if(c ==  '<'){
+            c = getc(userFiles.data[userFiles.used-1]);
+            bufferChar(c);
+            c = digraphReplacementLess(c);
+        } else if(c ==  ':'){
+            c = getc(userFiles.data[userFiles.used-1]);
+            bufferChar(c);
+            c = digraphReplacementColon(c);
+        } else if(c ==  '%'){
+            c = getc(userFiles.data[userFiles.used-1]);
+            bufferChar(c);
+            c = digraphReplacementPerc(c);
+        } else if(c ==  '?'){
+            c = getc(userFiles.data[userFiles.used-1]);
+            bufferChar(c);
+            if(c == '?'){
+                c = getc(userFiles.data[userFiles.used-1]);
+                bufferChar(c);
+                c = trigraphReplacement(c);
+            } else {
+                ungetChar();
+                c = buffer.data[buffer.used-1];
+            }
+        }
+    }
     return c;
 }
 
 // Returns last char in the buffer to the file
 void ungetChar(){
-    buffer.used--;
-    ungetc(buffer.data[buffer.used], userFiles.data[userFiles.used-1]);
-    buffer.data[buffer.used] = '\0';
+    ungetCalled = true;
+    for(int i = 1; i <= triOrDiChanged; i++){
+        ungetc(buffer.data[buffer.used - i], userFiles.data[userFiles.used-1]);
+    }
+    buffer.data[buffer.used - triOrDiChanged] = '\0';
+    buffer.used = buffer.used - triOrDiChanged;
+    triOrDiChanged = 1;
 }
 
 // Skips every char until it finds the end of the line

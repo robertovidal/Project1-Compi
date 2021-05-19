@@ -1,19 +1,19 @@
 #include "print.c"
 #define SIZE 10
 #define formula(a,b,c) a + b*c
-#define toString(x) #x
+#define toString(x) ??=x
 #define print(a) printf(a)
 #define pr(a) print(a)
 #define cycle(x , y,z) for(x=0; x<=y; x++)\
 	{\
 		printf("Enter the coefficient of x to the power %d: ",x);\
-		scanf("%f",&z[x]);\
+		scanf("%f",&z<:x:>);\
 	}
 
 float poly(float a[], int, float);
 
 int main()
-{
+??<
 	float x, a[SIZE], y1;
 	int deg, i;
 
@@ -23,7 +23,7 @@ int main()
 	printf("Enter the value of x for which the equation is to be evaluated: ");
 	scanf("%f", &x);
 
-	cycle(i, deg, a);
+	cycle(i, deg,a);
 
 	y1 = poly(a, deg, x);
 	
