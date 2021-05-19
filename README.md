@@ -3,7 +3,7 @@ Students:
 Jose Pablo Fernández Cubillo, 2019047740
 Roberto Vidal Patiño, 2019065537
 
-First of all youn need to have installed Latex
+First of all you need to have installed Latex
 and all its functionalities, which can be done
 with the command:
 
@@ -20,4 +20,8 @@ with:
 sudo apt-get install flex
 
 We are using the files program.c and print.c as test
-files
+files and the project can be run writing in the command line:
+
+./scanner program.c
+
+Where program.c is the file scanned.

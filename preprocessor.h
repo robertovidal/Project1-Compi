@@ -40,6 +40,8 @@ char getChar();
 
 void ungetChar();
 
+void jumpToEnd(char c);
+
 typedef enum {
     DEFINE, INCLUDE, NODIRECTIVE
 } directive;

@@ -215,9 +215,7 @@ Array_char macroExpansion(Array_char macro){
                             }
                             if(!written){
                                 if(isHashtag){
-                                    while(c != '\n'){
-                                        c = getChar();
-                                    }
+                                    jumpToEnd(c);
                                     freeArray(inserted);
                                     freeArray(replacement);
                                     freeArrayP(valsUser);
@@ -260,16 +258,13 @@ Array_char macroExpansion(Array_char macro){
 // the buffered string
 directive checkDirective(){
     directive dir = NODIRECTIVE;
-    char c = buffer.data[buffer.used-1];
-    if(c != '\0'){
-        buffer.data[buffer.used-1] = '\0';
-    }
+    ungetChar();
     if(strcmp(buffer.data,"include") == 0){
         dir = INCLUDE;
     } else if(strcmp(buffer.data,"define") == 0){
         dir = DEFINE;
     }
-    buffer.data[buffer.used-1] = c;
+
     return dir;
 }
 
@@ -320,9 +315,7 @@ void preprocess(){
                 }
             } else {
                 deleteAllArray(macro);
-                while(inChar != '\n' && inChar != EOF){
-                    inChar = getChar();
-                }
+                jumpToEnd(inChar);
                 insertBufferInFile();
             }
             clearBuffer();
@@ -355,41 +348,105 @@ void preprocess(){
             switch(checkDirective()){
                 case DEFINE:
                     inChar = skipSpaces(inChar);
-                    Array_char name;
-                    Array_char value;
+                    Array_char name = { NULL, 0, 0 };
+                    Array_char value = { NULL, 0, 0 };
                     Array_chars vars = { NULL, 0, 0 };
-                    initArray(name, char, 20);
-                    initArray(value, char, 20);
-                    for(;inChar != ' '; inChar = getChar()){
-                        if(inChar == '('){
-                            initArray(vars, Array_char, 10);
-                            do{
-                                Array_char v;
-                                initArray(v, char, 10);
-                                inChar = skipSpaces(inChar);
-                                for(inChar=getChar();inChar != ',' && inChar != ')'; inChar = getChar()){
-                                    insertArray(v, char, inChar);
-                                }
-                                insertArray(v, char, '\0');
-                                insertArray(vars, Array_char, v);
-                                inChar = skipSpaces(inChar);
-                                if(inChar == '\n'){
+                    bool hasParameter = false;
+                    if(inChar != '\n'){
+                        initArray(name, char, 20);
+                        initArray(value, char, 20);
+                        for(;inChar != ' ' && !error; inChar = getChar()){
+                            if(inChar == '('){
+                                hasParameter = true;
+                                if(name.used > 0){
+                                    initArray(vars, Array_char, 10);
+                                    do{
+                                        Array_char v;
+                                        initArray(v, char, 10);
+                                        if(inChar == '(' || inChar == ','){
+                                            inChar = getChar();
+                                        } else {
+                                            freeArray(v);
+                                            freeArray(vars);
+                                            error = true;
+                                            break;
+                                        }
+                                        inChar = skipSpaces(inChar);
+                                        for(;isalnum(inChar); inChar = getChar()){
+                                            insertArray(v, char, inChar);
+                                        }
+                                        insertArray(v, char, '\0');
+                                        insertArray(vars, Array_char, v);
+                                        inChar = skipSpaces(inChar);
+                                        if(inChar == '\n' || v.used == 1){
+                                            freeArray(v);
+                                            freeArray(vars);
+                                            error = true;
+                                            break;
+                                        }
+                                    }while(inChar != ')');
+                                } else {
                                     error = true;
                                     break;
                                 }
-                            }while(inChar != ')');
-                        } else {
-                            insertArray(name, char, inChar);
+                            } else {
+                                if((name.used == 0 && isalpha(inChar)) || (name.used > 0 && isalnum(inChar))){
+                                    insertArray(name, char, inChar);
+                                } else if((name.used == 0 && !isalpha(inChar)) || inChar == ')'){
+                                    error = true;
+                                }
+                            }
                         }
-                    }
-                    inChar = skipSpaces(inChar);
-                    bool isHashtag = false;
-                    Array_char hashtagTrue;
-                    initArray(hashtagTrue, char, 10);
-                    for(;inChar != '\n'; inChar = getChar()){
-                        if(isHashtag && inChar != ' '){
-                            insertArray(hashtagTrue, char, inChar);
-                        } else if(isHashtag && inChar == ' '){
+                        inChar = skipSpaces(inChar);
+                        bool isHashtag = false;
+                        Array_char hashtagTrue;
+                        initArray(hashtagTrue, char, 10);
+                        for(;inChar != '\n' && !error; inChar = getChar()){
+                            if(isHashtag && inChar != ' ' && hasParameter){
+                                insertArray(hashtagTrue, char, inChar);
+                            } else if(isHashtag && inChar == ' ' && hasParameter){
+                                insertArray(hashtagTrue, char, '\0');
+                                for(int i = 0; i < vars.used; i++){
+                                    if(strcmp(vars.data[i].data, hashtagTrue.data) == 0){
+                                        isHashtag = false;
+                                    }
+                                }
+                                if(isHashtag){
+                                    error = true;
+                                    break;
+                                }
+                            } else if(isalpha(inChar)){
+                                for(; isalnum(inChar) || inChar == '_'; inChar = getChar()){
+                                    insertArray(macro, char, inChar);
+                                }
+                                insertArray(macro, char, '\0');
+                                ungetChar(); // necessary if searchTrie returns NULL
+                                Array_char replacement = macroExpansion(macro);
+                                if(replacement.used > 0){
+                                    for(int i = 0; i < replacement.used && replacement.data[i] != '\0'; i++){
+                                        insertArray(value, char, replacement.data[i]);
+                                    }
+                                    if(freeExp){
+                                        freeArray(replacement);
+                                        freeExp = false;
+                                    }
+                                } else {
+                                    deleteAllArray(macro);
+                                    error = true;
+                                    break;
+                                }
+                                deleteAllArray(macro);
+                                continue;
+                            }
+                            if(inChar == '#'){
+                                isHashtag = true;
+                            }
+                            if(skipsEnter){
+                                insertArray(value, char, '\n');    
+                            }
+                            insertArray(value, char, inChar);
+                        }
+                        if(isHashtag && hasParameter){
                             insertArray(hashtagTrue, char, '\0');
                             for(int i = 0; i < vars.used; i++){
                                 if(strcmp(vars.data[i].data, hashtagTrue.data) == 0){
@@ -398,55 +455,14 @@ void preprocess(){
                             }
                             if(isHashtag){
                                 error = true;
-                                break;
                             }
-                        } else if(isalpha(inChar)){
-                            for(; isalnum(inChar) || inChar == '_'; inChar = getChar()){
-                                insertArray(macro, char, inChar);
-                            }
-                            insertArray(macro, char, '\0');
-                            ungetChar(); // necessary if searchTrie returns NULL
-                            Array_char replacement = macroExpansion(macro);
-                            if(replacement.used > 0){
-                                for(int i = 0; i < replacement.used && replacement.data[i] != '\0'; i++){
-                                    insertArray(value, char, replacement.data[i]);
-                                }
-                                if(freeExp){
-                                    freeArray(replacement);
-                                    freeExp = false;
-                                }
-                            } else {
-                                deleteAllArray(macro);
-                                while(inChar != '\n' && inChar != EOF){
-                                    inChar = getChar();
-                                }
-                                error = true;
-                                break;
-                            }
-                            deleteAllArray(macro);
-                            continue;
                         }
-                        if(inChar == '#'){
-                            isHashtag = true;
-                        }
-                        if(skipsEnter){
-                            insertArray(value, char, '\n');    
-                        }
-                        insertArray(value, char, inChar);
+                        freeArray(hashtagTrue);
+                    } else {
+                        error = true;
                     }
-                    if(isHashtag){
-                        insertArray(hashtagTrue, char, '\0');
-                        for(int i = 0; i < vars.used; i++){
-                            if(strcmp(vars.data[i].data, hashtagTrue.data) == 0){
-                                isHashtag = false;
-                            }
-                        }
-                        if(isHashtag){
-                            error = true;
-                        }
-                    }
-                    freeArray(hashtagTrue);
                     if(error || value.used == 0 || name.used == 0){
+                        jumpToEnd(inChar);
                         fputc('#', tmpF);
                         insertBufferInFile();
                         freeArrayP(vars);
@@ -466,20 +482,32 @@ void preprocess(){
                         }
                         for(inChar = getChar();
                             inChar != end; inChar = getChar()){
+                            if(inChar == '\n'){
+                                error = true;
+                                break;
+                            }
                             insertArray(userFileName, char, inChar);
                         }
                         insertArray(userFileName, char, '\0');
-                        if(!openUserFile(userFileName.data)){
-                            fputc('#', tmpF);
-                            insertBufferInFile();
+                        if(!error){
+                            if(!openUserFile(userFileName.data)){
+                                jumpToEnd(inChar);
+                                fputc('#', tmpF);
+                                insertBufferInFile();
+                            }
                         }
                     } else {
+                        error = true;
+                    }
+                    if(error){
+                        jumpToEnd(inChar);
                         fputc('#', tmpF);
                         insertBufferInFile();
                     }
                     deleteAllArray(userFileName);
                     break;
                 case NODIRECTIVE:
+                    jumpToEnd(inChar);
                     fputc('#', tmpF);
                     insertBufferInFile();
                     break;
@@ -496,9 +524,9 @@ void preprocess(){
 
 // Skips every space and tab found in the current file
 char skipSpaces(char c){
-    while(isspace(c) || c == '\t')
+    while(c != '\n' && (isspace(c) || c == '\t')){
         c = getChar();
-
+    }
     return c;
 }
 
@@ -562,10 +590,7 @@ void freeNames(){
 // Inserts in the file all chars stored in the buffer 
 // and clears the buffer
 void insertBufferInFile(){
-    if(buffer.data[buffer.used-1] != '\0'){
-        insertArray(buffer, char, '\0');
-    }
-    for(int i = 0; i < buffer.used-1; i++){
+    for(int i = 0; i < buffer.used; i++){
         fputc(buffer.data[i], tmpF);
     }
     clearBuffer();
@@ -596,4 +621,12 @@ void ungetChar(){
     buffer.used--;
     ungetc(buffer.data[buffer.used], userFiles.data[userFiles.used-1]);
     buffer.data[buffer.used] = '\0';
+}
+
+// Skips every char until it finds the end of the line
+// or the end of the file
+void jumpToEnd(char c){
+    while(c != '\n' && c != EOF){
+        c = getChar();
+    }
 }

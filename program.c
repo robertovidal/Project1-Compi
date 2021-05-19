@@ -4,11 +4,12 @@
 #define toString(x) #x
 #define print(a) printf(a)
 #define pr(a) print(a)
-#define cycle(x, y, z) for(x=0; x<=y; x++)\
+#define cycle(x , y,z) for(x=0; x<=y; x++)\
 	{\
 		printf("Enter the coefficient of x to the power %d: ",x);\
 		scanf("%f",&z[x]);\
 	}
+#define
 
 float poly(float a[], int, float);
 

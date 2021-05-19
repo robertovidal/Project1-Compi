@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2021.5.7)  17 MAY 2021 14:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2021.5.11)  18 MAY 2021 17:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1573,13 +1573,13 @@ File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
 ) [8
 
 ]
-LaTeX Font Info:    Try loading font information for OMS+qag on input line 76.
-LaTeX Font Info:    No file OMSqag.fd. on input line 76.
+LaTeX Font Info:    Try loading font information for OMS+qag on input line 74.
+LaTeX Font Info:    No file OMSqag.fd. on input line 74.
 
 
 LaTeX Font Warning: Font shape `OMS/qag/m/n' undefined
 (Font)              using `OMS/cmsy/m/n' instead
-(Font)              for symbol `textbraceleft' on input line 76.
+(Font)              for symbol `textbraceleft' on input line 74.
 
 [9
 
@@ -1595,11 +1595,11 @@ LaTeX Font Warning: Font shape `OMS/qag/m/n' undefined
 ]
 
 Package pgfplots Warning: Axis range for axis x is approximately empty; enlargi
-ng it (it is [1.0000000000:1.0000000000]) on input line 104.
+ng it (it is [1.0000000000:1.0000000000]) on input line 102.
 
  [warning /pgfplots/warning/approx empty range enlarged]
 
-Overfull \hbox (7.1789pt too wide) in paragraph at lines 104--104
+Overfull \hbox (7.1789pt too wide) in paragraph at lines 102--102
 [][]  
  []
 
@@ -1631,12 +1631,12 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
  ) 
 Here is how much of TeX's memory you used:
  35017 strings out of 492982
- 824822 string characters out of 6134897
- 1064656 words of memory out of 5000000
+ 824822 string characters out of 6134896
+ 1078760 words of memory out of 5000000
  37822 multiletter control sequences out of 15000+600000
  20043 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 74i,18n,122p,1204b,2227s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 74i,18n,122p,3910b,2227s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf/
 fonts/enc/dvips/tex-gyre/q-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.en
 c}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
@@ -1651,7 +1651,7 @@ e1/public/amsfonts/cm/cmtt10.pfb></usr/share/texmf/fonts/type1/public/lm/lmdunh
 ve/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist
 /fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1
 /urw/times/utmr8a.pfb>
-Output written on scanner.pdf (14 pages, 369550 bytes).
+Output written on scanner.pdf (14 pages, 369494 bytes).
 PDF statistics:
  472 PDF objects out of 1000 (max. 8388607)
  425 compressed objects within 5 object streams
