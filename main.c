@@ -7,7 +7,6 @@ int main(int argc, char *argv[]){
         printf("The name of the file is missing.");
     if(argc == 2){
         FILE *f = startPreprocess(argv[1]);
-        fclose(f);
         startScan(f);
         system("cd latex && pdflatex scanner.tex && mv ./scanner.pdf ../result.pdf && cd .. && evince result.pdf");
     }
