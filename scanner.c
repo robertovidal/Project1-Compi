@@ -249,7 +249,6 @@ void insert_string(char *token_str){
 
 
 void startScan(FILE *tmpF) {
-	FILE *file2 = fopen("program.c", "r");
     change_input(tmpF);
     file = fopen("latex/code.tex", "w");
     if(file == NULL){
