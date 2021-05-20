@@ -19,7 +19,7 @@ simplequotationmark \'
 backslash	\\
 comment	\/\/.*
 multilinecomment	[/][*][^*]*[*]+([^*/][^*]*[*]+)*[/]
-preprocess	(\#define|\#include|\#undef|\#ifdef|\#ifndef|\#if|\#else|\#elif|\#error|\#pragma).*
+preprocess	\#.*
 
 %%
 
@@ -27,11 +27,11 @@ preprocess	(\#define|\#include|\#undef|\#ifdef|\#ifndef|\#if|\#else|\#elif|\#err
 \n	{return NEWLINE;}
 {comment} {}
 {multilinecomment} {}
-{preprocess}	{return OTHER;}
 {intvalue}	{int_val = atoi(yytext) ;return INTVALUE;}
 {floatvalue}	{float_val = atof(yytext) ;return FLOATVALUE;}
 {stringvalue}	{return STRINGVALUE;}
 {charvalue}	{return CHARVALUE;}
+{preprocess}	{return OTHER;}
 "auto"	{ return AUTO;}
 "break"	{return BREAK;}
 "case"	{return CASE;}

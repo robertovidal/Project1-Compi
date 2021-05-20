@@ -9,7 +9,8 @@
 		printf("Enter the coefficient of x to the power %d: ",x);\
 		scanf("%f",&z<:x:>);\
 	}
-
+#defin A 20
+#incluede "program.c"
 float poly(float a[], int, float);
 
 int main()
